@@ -6,7 +6,8 @@ class StorePicker extends React.Component {
 
     goToStore = (event) => {
         event.preventDefault();
-        const storeName = this.myInput.value.value;
+        console.log(this.myInput.current.value)
+        const storeName = this.myInput.current.value;
         this.props.history.push(`/store/${storeName}`);
     };
 
@@ -26,8 +27,8 @@ class StorePicker extends React.Component {
                            required/>
                     <button type="submit">
                         Visit Store
-            <span role='img'
-                  aria-label='pointing right'> 👉</span>
+                        <span role='img'
+                              aria-label='pointing right'> 👉</span>
                     </button>
                 </form>
             </Fragment>
