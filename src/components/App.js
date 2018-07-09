@@ -3,6 +3,7 @@ import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
 import sampleFishes from '../sample-fishes';
+import Fish from "./Fish";
 
 const title = 'Fresh Seafood Market';
 
@@ -40,7 +41,10 @@ class App extends React.Component {
                 <div className="menu">
                     <Header tagline={title}/>
                     <ul className="fishes">
-                        
+                        {
+                            Object.keys(this.state.fishes)
+                                .map(key => <Fish key={key} details={this.state.fishes[key]}>{key}</Fish>)
+                        }
                     </ul>
                 </div>
                 <Order/>
