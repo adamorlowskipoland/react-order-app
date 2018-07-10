@@ -4,6 +4,7 @@ import Order from './Order';
 import Inventory from './Inventory';
 import sampleFishes from '../sample-fishes';
 import Fish from "./Fish";
+import base from '../base'
 
 const title = 'Fresh Seafood Market';
 
@@ -17,6 +18,19 @@ class App extends React.Component {
   state = {
     fishes: {},
     order: {},
+  };
+
+  componentDidMount() {
+    const { storeId } = this.props.match.params;
+    this.ref = base.syncState(`${storeId}/fishes`, {
+      context: this,
+      state: 'fishes',
+    });
+  }
+
+  componentWillUnmount() {
+    console.log('unmounted');
+    base.removeBinding(this.ref);
   };
 
   addFish = (fish) => {
