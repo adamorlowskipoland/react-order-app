@@ -68,6 +68,17 @@ class App extends React.Component {
     });
   };
 
+  deleteFish = (key) => {
+    //  1. take a copy of state
+    const fishes = { ...this.state.fishes };
+    //  2. update the state - remove the fish
+    fishes[key] = null;
+    //   3. update state
+    this.setState({
+      fishes,
+    });
+  };
+
   loadSampleFishes = () => {
     this.setState({
       fishes: sampleFishes,
@@ -79,6 +90,32 @@ class App extends React.Component {
     const order = { ...this.state.order };
     //    2. Either add to the order, or update the number in the order
     order[key] = order[key] + 1 || 1;
+    //      3. Call set state to update out state
+    this.setState({
+      order,
+    })
+  };
+
+  decreaseOrder = (key) => {
+    //    1. Take a copy of state
+    const order = { ...this.state.order };
+    //    2. Remove that item from order if it is > 1 else delete it
+    if (order[key] && order[key] > 1) {
+      order[key] = order[key] - 1;
+      //      3. Call set state to update out state
+      this.setState({
+        order,
+      })
+    } else {
+      this.deleteFromOrder(key);
+    }
+  };
+
+  removeFromOrder = (key) => {
+    //    1. Take a copy of state
+    const order = { ...this.state.order };
+    //    2. Remove that item from order
+    delete order[key];
     //      3. Call set state to update out state
     this.setState({
       order,
@@ -107,10 +144,16 @@ class App extends React.Component {
             }
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order}/>
+        <Order fishes={this.state.fishes}
+               order={this.state.order}
+               addToOrder={this.addToOrder}
+               decreaseOrder={this.decreaseOrder}
+               removeFromOrder={this.removeFromOrder}
+        />
         <Inventory
           addFish={this.addFish}
           updateFish={this.updateFish}
+          deleteFish={this.deleteFish}
           loadSampleFishes={this.loadSampleFishes}
           fishes={this.state.fishes}/>
       </div>
