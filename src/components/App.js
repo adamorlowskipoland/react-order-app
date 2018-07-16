@@ -107,7 +107,7 @@ class App extends React.Component {
         order,
       })
     } else {
-      this.deleteFromOrder(key);
+      this.removeFromOrder(key);
     }
   };
 
