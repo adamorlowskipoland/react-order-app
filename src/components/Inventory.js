@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import firebase from 'firebase';
+import PropTypes from "prop-types";
 import AddFishForm from "./AddFishForm";
 import EditFishForm from "./EditFishForm";
-import PropTypes from "prop-types";
+import Login from "./Login";
+import { firebaseApp } from "../base";
 
 class Inventory extends Component {
   static propTypes = {
@@ -12,7 +15,20 @@ class Inventory extends Component {
     fishes: PropTypes.object,
   };
 
+  authHandler = async (authData) => {
+    console.log(authData);
+  };
+
+  authtenticate = (provider) => {
+    const authProvider = new firebase.auth[`${provider}AuthProvider`]();
+    firebaseApp
+      .auth()
+      .signInWithPopup(authProvider)
+      .then(this.authHandler);
+  };
+
   render() {
+    return <Login authtenticate={this.authtenticate}/>
     return (
       <div className="inventory">
         <h2>Inventory</h2>
